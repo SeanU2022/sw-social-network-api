@@ -125,6 +125,8 @@ module.exports = {
   },
   // Remove assignment from a student
   removeAssignment(req, res) { 
+    console.log('You are DELETING/removing an assignment');
+    console.log(req.params.assignmentId);
     Student.findOneAndUpdate(
       { _id: req.params.studentId },
       { $pull: { assignment: { assignmentId: req.params.assignmentId } } },
