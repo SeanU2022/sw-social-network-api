@@ -1,7 +1,7 @@
 {
-  "name": "28-Stu_Mini-Project",
+  "name": "sw-social-network-api",
   "version": "1.0.1",
-  "description": "Mongoose back-end project - Develop",
+  "description": "Network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -16,5 +16,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.9"
+  },
+  "_comments": {
+    "name": "28-Stu_Mini-Project"
   }
 }

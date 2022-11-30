@@ -126,6 +126,7 @@ module.exports = {
   // Remove assignment from a student
   removeAssignment(req, res) { 
     console.log('You are DELETING/removing an assignment');
+    // use "assignmentId": "6385b4507960692129b3cef5",  NOT _id !!!
     console.log(req.params.assignmentId);
     Student.findOneAndUpdate(
       { _id: req.params.studentId },
