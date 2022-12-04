@@ -3,13 +3,7 @@ const { Schema, model } = require('mongoose');
 // const Thought = require('./Thought');
 // const { Thought } = require('../models');
 
-
 // const friendsSchema = require('./Friends');
-
-// email validator
-var mongoose = require('mongoose');
-require('mongoose-type-email');
-mongoose.SchemaTypes.Email.defaults.message = 'Sean says Email address is invalid'
 
 // Schema to create User model
 const userSchema = new Schema(
@@ -21,7 +15,16 @@ const userSchema = new Schema(
       trim: true,
       max_length: 50,
     },
-    email: mongoose.SchemaTypes.Email,
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      // npmjs.com/package/mongoose-type-email => https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
+      // match: [/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/, 'Please use valid email address'],
+      // above shortened for readability
+      match: [/^[\w.!#$%&'*+\/=?^_`{|}~-]+@\w(?:[\w-]{0,61}\w)?(?:\.\w(?:[\w-]{0,61}\w)?)*$/, 'Please use valid email address'],
+    },
     thoughts: [
       {
         type: Schema.Types.ObjectId,
