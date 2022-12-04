@@ -40,7 +40,7 @@ const userSchema = new Schema(
     ],
     // friends: [userSchema],
   },
-    // thoughts: [
+    //   thoughts: [
     //   {
     //     type: Schema.Types.ObjectId,
     //     ref: 'thought',

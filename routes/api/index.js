@@ -6,8 +6,10 @@ const router = require('express').Router();
 // router.use('/students', studentRoutes);
 
 const userRoutes = require('./userRoutes');
-// router.use('/user', userRoutes);
+const thoughtRoutes = require('./thoughtRoutes');
+
 router.use('/users', userRoutes);
+router.use('/thoughts', thoughtRoutes);
 
 
 module.exports = router;

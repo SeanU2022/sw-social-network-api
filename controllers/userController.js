@@ -70,5 +70,39 @@ module.exports = {
         console.log(err);
         return res.status(500).json(err);
       });
-  }
+  },
+
+  // use existing user to make a friend
+  addFriend(req, res) {
+    User.findByIdAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.params.friendId } },
+      { runValidators: true, new: true },
+    )
+    .then((user) => 
+      !user
+      ? res.status(404).json({ message: 'friendId not in the user collection!'})
+      : res.json(user))
+    .catch((err) => res.status(500).json(err));
+  },
+
+  // pull friend _id from user friends array
+  removeFriend(req, res) {
+    console.log('hello')
+
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { friends: { friendId: req.params.friendId } } },
+      { runValidators: true, new: true }
+    )
+    .then(console.log('user:=>'+req.params.userId))
+    .then(console.log('friend:=>'+req.params.friendId))
+    .then((user) =>
+      !user
+        ? res.status(404).json({ message: 'No user with this id!' })
+        : res.json(user)
+    )
+    .catch((err) => res.status(500).json(err));
+     console.log('hello')
+    },
 };
