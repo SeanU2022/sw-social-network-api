@@ -28,14 +28,14 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // create a thought
+
   createThought(req, res) {
     Thought.create(req.body)
       .then((thought) => res.json(thought))
       .catch((err) => res.status(500).json(err));
   },
 
-  // get user from userId
+  // get thought using thoughtId
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
       .select('-__v')   // return everything except __v (a mongoose idiosyncracy)
