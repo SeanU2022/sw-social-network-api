@@ -18,6 +18,7 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true,
+      // unique: true, replace by index>beautifyUnique
       unique: true,
       trim: true,
       // npmjs.com/package/mongoose-type-email => https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
