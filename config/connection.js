@@ -22,4 +22,8 @@ connect(connectionString, {
   useUnifiedTopology: true,
 });
 
+// models>User>username trimmed
+// FIX LATER
+// connection.Schema.Types.String.set('trim', true);
+
 module.exports = connection;

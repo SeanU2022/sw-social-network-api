@@ -20,4 +20,15 @@ router.route('/:studentId/assignments').post(addAssignment);
 // /api/students/:studentId/assignments/:assignmentId
 router.route('/:studentId/assignments/:assignmentId').delete(removeAssignment);
 
+
+//  ****************************************
+const {
+  getUsers,
+  createUser,
+} = require('../../controllers/userController');
+
+// /api/users
+router.route('/').get(getUsers).post(createUser);
+
+
 module.exports = router;
