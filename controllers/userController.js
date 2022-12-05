@@ -27,12 +27,6 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // create an ancient user
-  createUser(req, res) {
-    User.create(req.body)
-      .then((user) => res.json(user))
-      .catch((err) => res.status(500).json(err));
-  },
 
   // get user from userId
   getSingleUser(req, res) {
@@ -42,8 +36,33 @@ module.exports = {
         !user
           ? res.status(404).json({ message: 'No user with that ID' })
           : res.json({
+            user
+          })
+      )
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
+  },
+
+  // create an ancient user
+  createUser(req, res) {
+    User.create(req.body)
+      .then((user) => res.json(user))
+      .catch((err) => res.status(500).json(err));
+  },
+
+  updateUser(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+      )
+      .then(async (user) =>
+        !user
+          ? res.status(404).json({ message: 'No user with that ID' })
+          : res.json({
             user,
-            // grade: await grade(req.params.userId),
           })
       )
       .catch((err) => {
@@ -55,13 +74,6 @@ module.exports = {
   // Delete a user and clear their mind
   // BONUS: Remove a user's associated thoughts when deleted.
   deleteUser(req, res) {
-    let rememberedUsername;
-    function rememberAndReportUserDeleted(userObj) {
-      rememberedUsername = userObj.username
-      return res.json({userObj})
-    }
-    
-    // User.findByIdAndRemove({ _id: req.params.userId })
     User.findOneAndDelete({ _id: req.params.userId })
       .then((user) => 
         !user
