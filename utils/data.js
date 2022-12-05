@@ -209,7 +209,7 @@ const getRandomUserDataName = () => {
 // Function to generate random comments given a number (ex. 10 comments === getRandomComments(10))
 // const getRandomComments = (int) => {
 
-const getThoughts = () => {
+const getThoughtsData = () => {
   const results = []
   thoughtData.forEach( (element) => { results.push({
     thoughtText: element,
@@ -253,5 +253,6 @@ module.exports = {
   getRandomName, 
   getRandomAssignments, 
   userData,
-  getThoughts
+  getThoughtsData,
+  getRandomUserDataName
 };

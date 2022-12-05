@@ -29,10 +29,27 @@ module.exports = {
       });
   },
 
+  // create document in thought collection and store FK in User associated document
   createThought(req, res) {
     Thought.create(req.body)
-      .then((thought) => res.json(thought))
-      .catch((err) => res.status(500).json(err));
+      .then((thought) => {
+        return User.findByIdAndUpdate(
+          { _id: req.body.userId },
+          { $addToSet: { thoughts: thought._id } },
+          { new: true }
+        );
+      })
+      .then((user) =>
+        !user
+        ? res
+          .status(404)
+          .json({ message: `Thought created, but could not find user with id ` })
+        : res.json('Created the thought 🎉')
+      )
+      .catch((err) => {
+        console.log(err)
+        res.status(500).json(err)
+      });
   },
 
   // get thought using thoughtId

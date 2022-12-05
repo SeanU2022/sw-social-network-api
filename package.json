@@ -8,6 +8,7 @@
     "start": "node index",
     "dev": "nodemon index",
     "seed": "node utils/seed",
+    "seed2": "node utils/seed2",
     "heroku-postbuild": "node utils/seed.js"
   },
   "dependencies": {

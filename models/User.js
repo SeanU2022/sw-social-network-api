@@ -22,9 +22,9 @@ const userSchema = new Schema(
       unique: true,
       trim: true,
       // npmjs.com/package/mongoose-type-email => https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
-      // match: [/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/, 'Please use valid email address'],
+      // match: [/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/, 'Please use a valid email address'],
       // above shortened for readability
-      match: [/^[\w.!#$%&'*+\/=?^_`{|}~-]+@\w(?:[\w-]{0,61}\w)?(?:\.\w(?:[\w-]{0,61}\w)?)*$/, 'Please use valid email address'],
+      match: [/^[\w.!#$%&'*+\/=?^_`{|}~-]+@\w(?:[\w-]{0,61}\w)?(?:\.\w(?:[\w-]{0,61}\w)?)*$/, 'Please use a valid email address'],
     },
     thoughts: [
       {
