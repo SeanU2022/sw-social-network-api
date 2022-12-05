@@ -15,13 +15,15 @@ const reactionSchema = new Schema(
     },
     username: {
       type: String,
-      // unique and trimmed
       required: true,
       max_length: 50,
     },
     createdAt: {
       type: Date,
       default: Date.now,
+      get: (date) => {
+        if (date) return date.toISOString().split("T") [0];
+      },
     },
   },
   {

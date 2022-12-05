@@ -1,7 +1,5 @@
 const router = require('express').Router();
 
-
-//  ****************************************
 const {
   getUsers,
   getSingleUser,
@@ -18,13 +16,8 @@ router.route('/').get(getUsers).post(createUser);
 // /api/users/:userId
 router.route('/:userId').get(getSingleUser).put(updateUser).delete(deleteUser)
 
- // /api/users/:userId/friends/:friendId
-// const friendRoutes = require('./friendRoutes')
-// router.use('/:userId/friends', friendRoutes)
-// TO DO create friendRoutes TO replace:
-
+// /api/users/:userId/friends/:friendId
+// the friend is another user
 router.route('/:userId/friends/:friendId').put(addFriend).delete(removeFriend)
-// router.route('/:userId/friends/:friendName').delete(removeFriend)
-
 
 module.exports = router;

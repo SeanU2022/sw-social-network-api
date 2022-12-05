@@ -1,9 +1,4 @@
 const { Schema, model } = require('mongoose');
-// const assignmentSchema = require('./Assignment');
-// const Thought = require('./Thought');
-// const { Thought } = require('../models');
-
-// const friendsSchema = require('./Friends');
 
 // Schema to create User model
 const userSchema = new Schema(
@@ -18,7 +13,6 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true,
-      // unique: true, replace by index>beautifyUnique
       unique: true,
       trim: true,
       // npmjs.com/package/mongoose-type-email => https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
@@ -38,14 +32,7 @@ const userSchema = new Schema(
         ref: 'user',
       },
     ],
-    // friends: [userSchema],
   },
-    //   thoughts: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'thought',
-    //   },
-    // ],
   {
     toJSON: {
       getters: true,

@@ -4,10 +4,6 @@ const reactionSchema = require("./Reaction")
 
 const thoughtSchema = new Schema(
   {
-    // thoughtId: {
-    //   type: Schema.Types.ObjectId,
-    //   default: () => new Types.ObjectId(),
-    // },
     thoughtText: {
       type: String,
       required: true,
@@ -18,11 +14,13 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
+      get: (date) => {
+        if (date) return date.toISOString().split("T") [0];
+      },
     },
     // getter to format data
     username: {
       type: String,
-      // unique and trimmed
       required: true,
       max_length: 50,
     },
@@ -32,7 +30,6 @@ const thoughtSchema = new Schema(
     toJSON: {
       getters: true,
     },
-    // id: false,
   }
 );
 
