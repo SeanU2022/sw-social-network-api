@@ -145,10 +145,10 @@ const POSTuserData = [
 
 const userData = [
   {username: "Sean Wallace", email: "sean.wallace.australia@gmail.com"},
-  {username: "John Jones", email: "cyunclescrooge@gmail.com"},
-  {username: "Peter Smith", email: "margieparanoid@yahoo.com"},
   {username: "David Adams", email: "maggieopen-minded@outlook.com"},
   {username: "Wendel Frankston", email: "indyegoistic@verizon.net"},
+  {username: "John Jones", email: "cyunclescrooge@gmail.com"},
+  {username: "Peter Smith", email: "margieparanoid@yahoo.com"},
   // {username: "Paul Spindle", email: "cheerfulollie@comcast.net"},
   // {username: "Rex Tricks", email: "bravebart@comcast.net"},
   // {username: "Dan Danone", email: "revulsioncathy@att.net"},

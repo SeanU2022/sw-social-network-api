@@ -87,6 +87,7 @@ module.exports = {
       });
   },
 
+  // FRIENDS: future release: use existing friend to make this user (a friend too)
   // use existing user to make a friend
   addFriend(req, res) {
     User.findByIdAndUpdate(

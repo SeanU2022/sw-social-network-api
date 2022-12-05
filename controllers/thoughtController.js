@@ -29,6 +29,23 @@ module.exports = {
       });
   },
 
+  // get thought using thoughtId
+  getSingleThought(req, res) {
+    Thought.findOne({ _id: req.params.thoughtId })
+      .select('-__v')   // return everything except __v (a mongoose idiosyncracy)
+      .then(async (thought) =>
+        !thought
+          ? res.status(404).json({ message: 'No thought with that ID' })
+          : res.json({
+            thought,
+          })
+      )
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
+  },
+
   // create document in thought collection and store FK in User associated document
   createThought(req, res) {
     Thought.create(req.body)
@@ -52,10 +69,12 @@ module.exports = {
       });
   },
 
-  // get thought using thoughtId
-  getSingleThought(req, res) {
-    Thought.findOne({ _id: req.params.thoughtId })
-      .select('-__v')   // return everything except __v (a mongoose idiosyncracy)
+  updateThought(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+      )
       .then(async (thought) =>
         !thought
           ? res.status(404).json({ message: 'No thought with that ID' })
@@ -95,41 +114,22 @@ module.exports = {
       });
   },
 
-  updateThought(req, res) {
-    Thought.findOneAndUpdate(
-      { _id: req.params.thoughtId },
-      { $set: req.body },
-      { runValidators: true, new: true }
-      )
-      .then(async (thought) =>
-        !thought
-          ? res.status(404).json({ message: 'No thought with that ID' })
-          : res.json({
-            thought,
-          })
-      )
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).json(err);
-      });
-  },
-
-	// Reactions for thoughts
+	// Reactions on thoughts
 	// FROM 26 Stu_CRUD-Subdoc
 	// Add a video response
-		// addVideoResponse(req, res) {
-		// 	Video.findOneAndUpdate(
-		// 		{ _id: req.params.videoId },
-		// 		{ $addToSet: { responses: req.body } },
-		// 		{ runValidators: true, new: true }
-		// 	)
-		// 		.then((video) =>
-		// 			!video
-		// 				? res.status(404).json({ message: 'No video with this id!' })
-		// 				: res.json(video)
-		// 		)
-		// 		.catch((err) => res.status(500).json(err));
-		// },
+  addReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'This thought has no id!' })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
+		},
 		// // Remove video response
 		// removeVideoResponse(req, res) {
 		// 	Video.findOneAndUpdate(
