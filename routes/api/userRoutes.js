@@ -24,6 +24,7 @@ router.route('/:userId').get(getSingleUser).put(updateUser).delete(deleteUser)
 // TO DO create friendRoutes TO replace:
 
 router.route('/:userId/friends/:friendId').put(addFriend).delete(removeFriend)
+// router.route('/:userId/friends/:friendName').delete(removeFriend)
 
 
 module.exports = router;

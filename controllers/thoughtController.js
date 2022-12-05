@@ -115,33 +115,33 @@ module.exports = {
   },
 
 	// Reactions on thoughts
-	// FROM 26 Stu_CRUD-Subdoc
-	// Add a video response
   addReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $addToSet: { reactions: req.body } },
+      // { $push: { reactions: req.body } },         // 2 people can have the same reaction
       { runValidators: true, new: true }
     )
       .then((thought) =>
         !thought
-          ? res.status(404).json({ message: 'This thought has no id!' })
+          ? res.status(404).json({ message: 'This thought id not found!' })
           : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
 		},
-		// // Remove video response
-		// removeVideoResponse(req, res) {
-		// 	Video.findOneAndUpdate(
-		// 		{ _id: req.params.videoId },
-		// 		{ $pull: { reactions: { responseId: req.params.responseId } } },
-		// 		{ runValidators: true, new: true }
-		// 	)
-		// 		.then((video) =>
-		// 			!video
-		// 				? res.status(404).json({ message: 'No video with this id!' })
-		// 				: res.json(video)
-		// 		)
-		// 		.catch((err) => res.status(500).json(err));
-		// },
+
+  removeReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      // note the difference to removeFriend
+      { $pull: { reactions: { reactionId: req.params.reactionId } } },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'This thought id not found!' })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
+		},
 };
