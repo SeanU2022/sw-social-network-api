@@ -43,8 +43,8 @@ module.exports = {
         !user
         ? res
           .status(404)
-          .json({ message: `Thought created, but could not find user with id ` })
-        : res.json('Created the thought 🎉')
+          .json({ message: 'Thought created, but could not find user with id' })
+        : res.json('Thought created 🎉!')
       )
       .catch((err) => {
         console.log(err)
@@ -70,13 +70,24 @@ module.exports = {
   },
 
   deleteThought(req, res) {
-    Thought.findByIdAndRemove({ _id: req.params.thoughtId })
-      .then(async (thought) =>
-        !thought
-          ? res.status(404).json({ message: 'No thought with that ID' })
-          : res.json({
-            thought,
-          })
+		// req.params.thought gets destroyed after the first .then but kept in temp to be used in the second .then
+		const tempThoughtId = req.params.thoughtId
+    Thought.findByIdAndRemove({ _id: tempThoughtId })
+      .then(async (thought) => 
+					!thought
+						? res.status(404).json({ message: `thoughtId ${(tempThoughtId)} was not found!` })
+						: User.findOneAndUpdate(
+							{ thoughts: tempThoughtId },
+							{ $pull: { thoughts: tempThoughtId } },
+							{ new: true }
+						)
+      )
+      .then((user) =>
+					!user
+						? res
+							.status(404)
+							.json({ message: `thoughtId ${(tempThoughtId)} had no user linked to it` })
+						: res.json({ message: `thought  ${(tempThoughtId)} successfully removed!` })
       )
       .catch((err) => {
         console.log(err);
@@ -102,4 +113,35 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
+
+	// Reactions for thoughts
+	// FROM 26 Stu_CRUD-Subdoc
+	// Add a video response
+		// addVideoResponse(req, res) {
+		// 	Video.findOneAndUpdate(
+		// 		{ _id: req.params.videoId },
+		// 		{ $addToSet: { responses: req.body } },
+		// 		{ runValidators: true, new: true }
+		// 	)
+		// 		.then((video) =>
+		// 			!video
+		// 				? res.status(404).json({ message: 'No video with this id!' })
+		// 				: res.json(video)
+		// 		)
+		// 		.catch((err) => res.status(500).json(err));
+		// },
+		// // Remove video response
+		// removeVideoResponse(req, res) {
+		// 	Video.findOneAndUpdate(
+		// 		{ _id: req.params.videoId },
+		// 		{ $pull: { reactions: { responseId: req.params.responseId } } },
+		// 		{ runValidators: true, new: true }
+		// 	)
+		// 		.then((video) =>
+		// 			!video
+		// 				? res.status(404).json({ message: 'No video with this id!' })
+		// 				: res.json(video)
+		// 		)
+		// 		.catch((err) => res.status(500).json(err));
+		// },
 };

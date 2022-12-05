@@ -55,17 +55,20 @@ module.exports = {
   // Delete a user and clear their mind
   // BONUS: Remove a user's associated thoughts when deleted.
   deleteUser(req, res) {
-    User.findByIdAndRemove({ _id: req.params.userId })
-      .then(async (user) =>
+    let rememberedUsername;
+    function rememberAndReportUserDeleted(userObj) {
+      rememberedUsername = userObj.username
+      return res.json({userObj})
+    }
+    
+    // User.findByIdAndRemove({ _id: req.params.userId })
+    User.findOneAndDelete({ _id: req.params.userId })
+      .then((user) => 
         !user
-          ? res.status(404).json({ message: 'No user with that ID' })
-          // Thought.findByIdAndDelete need to insert userID to thought first
-
-          : res.json({
-            user,
-            // grade: await grade(req.params.userId),
-          })
+          ? res.status(404).json({ message: 'No user with that ID was found'})
+          : Thought.deleteMany({ username: { $in: user.username } })
       )
+      .then(() => res.json({ message: 'User and their thoughts deleted!' }))
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
