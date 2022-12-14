@@ -6,10 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node index",
-    "dev": "nodemon index",
-    "seed": "node utils/seed",
-    "seed2": "node utils/seed2",
-    "heroku-postbuild": "node utils/seed.js"
+    "dev": "nodemon index"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -25,6 +22,9 @@
     "prettier": "^2.1.2"
   },
   "_comments": {
-    "name": "28-Stu_Mini-Project"
+    "name": "28-Stu_Mini-Project",
+    "seed": "node utils/seed",
+    "seed2": "node utils/seed2",
+    "heroku-postbuild": "node utils/seed.js"
   }
 }
